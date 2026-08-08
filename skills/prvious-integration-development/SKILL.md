@@ -1,6 +1,6 @@
 ---
 name: prvious-integration-development
-description: Use this skill when designing, implementing, reviewing, or testing Laravel boundaries around third-party APIs, SDKs, webhooks, and remote systems, or when deciding whether provider-specific code needs direct SDK usage, a concrete adapter, or an application-owned gateway. Covers boundary selection, provider-type isolation, failure classification, remote-write safety, and integration testing without imposing a reliability architecture.
+description: Use this skill when designing, implementing, reviewing, or testing Laravel boundaries around third-party APIs, SDKs, webhooks, and remote systems, or when deciding whether provider-specific code needs direct SDK usage, a concrete adapter, or an application-owned gateway. Covers boundary selection, provider-type isolation, failure classification, remote-write safety, first-class fakes, and layered integration testing without imposing a reliability architecture.
 ---
 
 # Laravel Integration Development
@@ -30,11 +30,14 @@ Do not introduce the Prvious Action Pattern or Result solely because this integr
 4. Define application-owned inputs and outputs only where they protect a meaningful boundary.
 5. Classify each provider outcome as success, definitive expected rejection, operational failure, unknown remote outcome, or programming/configuration failure.
 6. Identify retry, idempotency, transaction, webhook, and consistency decisions without selecting new infrastructure implicitly.
-7. Implement and test the boundary using provider-supported fakes or controlled doubles; prevent real remote requests from escaping tests.
+7. When the application owns an integration interface, provide a deterministic Fake and use it in consumer tests. Test the provider adapter separately through a provider-supported SDK fake or controlled transport, and prevent real remote requests from escaping tests.
 
 ## Preserve These Invariants
 
 - Do not create an interface or wrapper that only mirrors a stable library without adding an application boundary.
+- When the application owns an integration interface, provide a purpose-built Fake in test support and use it instead of a dynamic mock in application-consumer tests.
+- Make Fake behavior explicit and application-level. Record requests, require configured outcomes, and never call the network, expose vendor types, simulate provider internals, or share mutable state between tests.
+- Do not introduce an interface solely to obtain a Fake. Test an intentionally concrete adapter through the provider SDK's supported fake or a controlled transport seam.
 - Keep provider-specific translation inside the provider-specific implementation once an application-owned boundary exists.
 - Do not expose vendor response objects, status codes, or exception classes through an application-owned contract by accident.
 - Translate only provider outcomes that are understood definitively. Preserve the original exception as `previous` when translating operational exceptions.
@@ -44,6 +47,7 @@ Do not introduce the Prvious Action Pattern or Result solely because this integr
 - A local database transaction cannot roll back a remote side effect.
 - Do not introduce an outbox, pending-attempt model, compensation workflow, reconciliation process, retry policy, or idempotency mechanism unless the project already uses it or the architecture decision is explicitly in scope.
 - Verify webhook authenticity before trusting payloads and consider duplicate or out-of-order delivery according to the provider's guarantees.
+- Prevent unfaked remote requests from escaping the ordinary test suite.
 
 ## Read the Relevant References
 
