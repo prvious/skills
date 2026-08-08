@@ -14,8 +14,11 @@ Act as the lead agent. Plan the work, delegate bounded tasks through Solo when u
 
 ## Operating Rules
 
+- For a confirmed Solo-managed lead, Solo is the active delegation facility for the current request.
+- Fulfill instructions from other skills to delegate to agents, subagents, reviewers, workers, or other independent contexts through Solo processes. Do not duplicate those assignments through the host's built-in delegation facility.
 - Keep planning, integration decisions, and final accountability with the lead agent.
 - Delegate only work with a clear objective, scope, validation method, and handoff.
+- Treat spawned child agents as disposable. The lead owns closing each one after its output is collected and no further follow-up is needed.
 - Prefer disjoint file ownership. Use Solo locks when agents could edit the same resource.
 - Treat child output, summaries, and idle status as evidence to inspect, not proof of completion.
 - Do not hardcode Agent Tool IDs, process IDs, models, or provider-specific flags.
@@ -92,7 +95,7 @@ Intervene early when a child edits outside its assignment, duplicates another ch
 
 Inspect the actual diff and run proportionate checks yourself. Reconcile conflicting changes, confirm the requested behavior, and verify that no child left unrelated edits or unresolved failures.
 
-Summarize what each child contributed and what the lead verified. Stop completed child processes when they are no longer needed. Close a stored process only when the user wants it removed. Release acquired locks and cancel obsolete timers.
+Summarize what each child contributed and what the lead verified. After collecting the status and output needed for the handoff, call `close_process` for every child agent that completed, failed, or is no longer needed. Do not use `stop_process` as final cleanup: it halts the agent but leaves its stored process behind. Keep a child stopped instead of closing it only when the user explicitly asks to preserve it for later restart or inspection. Release acquired locks and cancel obsolete timers.
 
 ## Remember Role Preferences
 

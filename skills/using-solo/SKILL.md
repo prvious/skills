@@ -1,9 +1,10 @@
 ---
 name: using-solo
-description: Use this skill at the start of every conversation and before responding to or acting on any user request to determine whether the current process is a Solo-managed lead. For confirmed Solo-managed leads, apply the Solo orchestration workflow to the request. If Solo MCP is unavailable or the process is not Solo-managed, continue normally. Do not use this skill when the agent was dispatched as a bounded worker.
+description: Always use this skill at the start of every conversation and before responding to or acting on any user request. Determine whether the current process is a Solo-managed lead. When confirmed, make Solo the active delegation facility and apply its orchestration workflow. If Solo MCP is unavailable or the process is not Solo-managed, continue normally. Skip this skill only when the agent was dispatched as a bounded worker.
 license: MIT
 compatibility: Requires Solo MCP for managed-session detection; delegation requires at least one configured CLI Agent Tool. Automatic start-of-conversation activation depends on the host supporting implicit skill invocation. The gate exits quietly when Solo MCP is unavailable. The optional configuration helper runs on Node.js 18.3+, Bun, or Deno 2 with scoped project and Git permissions.
 metadata:
+    short-description: "Always apply before responding or acting: detect Solo-managed leads, route delegation through Solo when confirmed, and skip bounded workers."
     author: "Clovis Muneza"
     version: "0.1.0"
     tags: "solo, mcp, orchestration, multi-agent, coding-agents, delegation, session-detection"
@@ -30,6 +31,8 @@ Use `SOLO_PROCESS_ID` only to identify the current process. Never pass another p
 ## Route the Work
 
 For a confirmed Solo-managed lead, read [references/orchestration.md](references/orchestration.md) completely before responding or acting, then apply it to the current request.
+
+Solo is the active delegation facility for that request. Fulfill delegation required by other skills through the Solo workflow rather than also launching the same assignments through the host's built-in delegation facility.
 
 Read [references/configuration.md](references/configuration.md) only when selecting configured roles or changing remembered role preferences.
 
