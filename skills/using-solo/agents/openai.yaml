@@ -1,5 +1,5 @@
 interface:
-  display_name: "Using Solo"
+  display_name: "using-solo"
   short_description: "Route Solo-managed work through agent orchestration"
   default_prompt: "Use $using-solo to detect whether this is a Solo-managed lead session and apply its orchestration workflow."
 
