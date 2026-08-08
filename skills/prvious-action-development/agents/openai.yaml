@@ -1,0 +1,4 @@
+interface:
+  display_name: "prvious-action-development"
+  short_description: "Build Laravel Actions with typed outcomes"
+  default_prompt: "Use $prvious-action-development to design, implement, review, or test this Laravel application Action."

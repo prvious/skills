@@ -1,0 +1,4 @@
+interface:
+  display_name: "prvious-integration-development"
+  short_description: "Design safe third-party boundaries"
+  default_prompt: "Use $prvious-integration-development to design, implement, review, or test this Laravel third-party integration."
