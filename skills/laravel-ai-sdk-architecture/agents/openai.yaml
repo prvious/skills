@@ -1,0 +1,4 @@
+interface:
+  display_name: "Laravel AI SDK Architecture"
+  short_description: "Choose Laravel AI SDK architecture boundaries"
+  default_prompt: "Use $laravel-ai-sdk-architecture to decide whether this responsibility belongs in Laravel code, a tool, an agent, a sub-agent, or an automation."

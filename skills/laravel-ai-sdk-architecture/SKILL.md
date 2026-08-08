@@ -1,15 +1,13 @@
 ---
-name: laravel-ai-architecture
-description: Guide architecture decisions in Laravel AI SDK applications by choosing between normal Laravel code, tools, agents, sub-agents, and automations. Use when deciding where an AI responsibility should live or reviewing whether a new agent or tool boundary is necessary.
-license: MIT
-compatibility: Requires a Laravel application using the first-party Laravel AI SDK package, laravel/ai. Sub-agent guidance assumes support for CanActAsTool.
+name: laravel-ai-sdk-architecture
+description: Guide architecture decisions in applications using the first-party Laravel AI SDK by choosing between normal Laravel code, tools, agents, sub-agents, and automations. Use when deciding where an AI responsibility should live or reviewing whether a new agent, tool, sub-agent, or automation boundary is necessary.
 metadata:
-    version: "1.0.0"
-    laravel-package: "laravel/ai"
-    tags: "laravel, php, ai-sdk, architecture, agents, tools"
+    short-description: "Apply when designing or reviewing Laravel AI SDK responsibilities across code, tools, agents, sub-agents, and automations."
 ---
 
-# Laravel AI Architecture
+# Laravel AI SDK Architecture
+
+Apply this skill only to applications using the first-party `laravel/ai` package. Assume sub-agent guidance requires SDK support for `CanActAsTool`.
 
 Choose the simplest architecture that gives the model only the decisions and permissions it needs. Reuse an existing agent unless a separate agent boundary provides a clear benefit.
 
