@@ -1,5 +1,5 @@
 ---
-name: laravel-ai-sdk-architecture
+name: prvious-ai-sdk-architecture
 description: Guide architecture decisions in applications using the first-party Laravel AI SDK by choosing between normal Laravel code, tools, agents, sub-agents, and automations. Use when deciding where an AI responsibility should live or reviewing whether a new agent, tool, sub-agent, or automation boundary is necessary.
 metadata:
     short-description: "Apply when designing or reviewing Laravel AI SDK responsibilities across code, tools, agents, sub-agents, and automations."
