@@ -4,16 +4,13 @@ description: "Orchestrates six specialized agents for pull requests and code cha
 license: Apache-2.0; see LICENSE
 compatibility: Requires git and an active delegation facility capable of launching independent agent contexts, either through the host or a session-level orchestration workflow. A hosting CLI or API such as gh is needed only when the review scope must be resolved from a hosted pull request.
 metadata:
-  author: "Anthropic; adapted by Prvious"
-  source: "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/pr-review-toolkit"
-  source-commit: "d33732b67aef18b3409d2c566e1d15541906726d"
+  author: "Prvious"
+  modified-by: "Prvious"
 ---
 
 # PR Review Toolkit
 
 Coordinate six specialists, each focused on a distinct aspect of code quality. Determine which specialists apply, delegate them to independent agent contexts, and aggregate their results into a comprehensive report.
-
-> Adapted from Anthropic's `commands/review-pr.md` and agent prompts; see `NOTICE` and `LICENSE`. The specialist prompts and review policies are preserved, while this port runs applicable advisory reviewers concurrently by default.
 
 ## Define Specialists and Delegation
 
@@ -66,8 +63,9 @@ The toolkit may also activate proactively after a logical chunk of work:
 1. Honor a user-specified pull request, branch, commit range, file list, or aspect.
 2. Otherwise inspect `git status` and `git diff --name-only` to identify recent changes.
 3. When a hosted pull request may exist, use the available hosting tool, such as `gh pr view`, to resolve its base, head, and changed files.
-4. Tell every specialist exactly which files or diff to review. Do not let specialists silently choose different scopes.
-5. Focus on the changed code rather than reviewing the entire repository unless the user explicitly asks for a broader audit.
+4. Inspect the changed files, repository instructions, manifests, build configuration, and nearby code to identify the languages, frameworks, and project conventions in scope. Never assume a JavaScript or TypeScript codebase.
+5. Tell every specialist exactly which files or diff to review and which stack and conventions apply. Do not let specialists silently choose different scopes.
+6. Focus on the changed code rather than reviewing the entire repository unless the user explicitly asks for a broader audit.
 
 ## Select Applicable Reviewers
 
@@ -76,8 +74,8 @@ For `all` or an aspect-unspecified comprehensive review, apply the upstream sele
 - Always run the **general code reviewer**.
 - Run the **test analyzer** if test files changed.
 - Run the **comment analyzer** if comments or documentation were added or changed.
-- Run the **silent-failure hunter** if error handling, catch blocks, or fallback behavior changed.
-- Run the **type-design analyzer** if types or data models were added or modified.
+- Run the **silent-failure hunter** if error handling, exception or failure paths, or fallback behavior changed.
+- Run the **type-design analyzer** if types, schemas, data models, or other domain representations were added or modified.
 - Run the **code simplifier** after the review passes.
 
 An explicitly requested reviewer runs even when its normal change-based trigger is absent.
@@ -89,6 +87,7 @@ Create one independent specialist context for every selected role. Give it:
 - the exact review scope;
 - the applicable repository instructions;
 - the corresponding reference file;
+- the languages, frameworks, toolchain, and conventions discovered for that scope;
 - relevant pull-request context;
 - any user-requested focus.
 
