@@ -3,12 +3,13 @@
 [![Laravel Boost skill](https://badge.laravel.cloud/boost-badge.svg?style=flat)](https://badge.laravel.cloud/preview#?mode=boost)
 [![License: MIT and Apache-2.0](https://img.shields.io/badge/license-MIT%20and%20Apache--2.0-blue.svg)](#license)
 
-A focused collection of reusable skills for AI coding agents. The skills in this repository help agents review code changes, design Laravel application Actions and third-party boundaries, make Laravel AI SDK architecture decisions, and coordinate work in Solo-managed sessions.
+A focused collection of reusable skills for AI coding agents. The skills in this repository help agents plan GitHub issues, review code changes, design Laravel application Actions and third-party boundaries, make Laravel AI SDK architecture decisions, and coordinate work in Solo-managed sessions.
 
 ## Available skills
 
 | Skill | Purpose | Requirements |
 | --- | --- | --- |
+| [`plan-issue`](skills/plan-issue/SKILL.md) | Researches a GitHub issue or feature and produces an implementation-ready plan without changing code. | A Git repository and access to any referenced GitHub issue or linked material. |
 | [`pr-review-toolkit`](skills/pr-review-toolkit/SKILL.md) | Selects applicable pull-request review angles, delegates advisory review concurrently to independent specialists, and aggregates findings across correctness, tests, error handling, comments, type design, and simplification. | Git and an active delegation facility with independent agent contexts, either host-native or supplied by session orchestration; hosted pull-request lookup also needs a hosting CLI or API. |
 | [`prvious-action-development`](skills/prvious-action-development/SKILL.md) | Creates, changes, reviews, and tests Laravel Actions as application use-case boundaries. | A Laravel application using the Prvious Laravel Action Pattern and [`prvious/result`](https://github.com/prvious/result). |
 | [`prvious-integration-development`](skills/prvious-integration-development/SKILL.md) | Designs, implements, reviews, and tests boundaries around third-party APIs, SDKs, webhooks, and remote systems. | A Laravel application that integrates with a third-party or remote system. |
@@ -46,6 +47,8 @@ Install the collection with the [Skills CLI](https://github.com/vercel-labs/skil
 
 ```sh
 npx skills add prvious/skills
+# or
+pnpm dlx skills add prvious/skills
 ```
 
 To install only one skill:
@@ -63,6 +66,14 @@ npx skills add prvious/skills --skill SKILL_NAME --global --agent codex
 ## Usage
 
 Once installed, a compatible agent discovers each skill from its name and description and loads it when a request matches.
+
+Example requests for `plan-issue`:
+
+```text
+Plan GitHub issue #123 into reviewable implementation tasks and commits.
+
+Research this feature request and produce an implementation-ready plan without changing code.
+```
 
 Example requests for `pr-review-toolkit`:
 

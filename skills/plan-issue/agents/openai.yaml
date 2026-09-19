@@ -1,0 +1,4 @@
+interface:
+  display_name: "plan-issue"
+  short_description: "Turn GitHub issues into implementation-ready plans"
+  default_prompt: "Use $plan-issue to research this issue and produce an implementation-ready plan without changing code."
